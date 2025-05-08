@@ -1,3 +1,10 @@
+/*
+ * Library to create 3D-printable Flexicoil meter roller segments
+ * Copyright 2025 Michael Torrie
+ * 
+ * Licensed under the terms of the GPLv3
+ */
+
 include <dimensions.scad>
 
 //make cylinders smoother
