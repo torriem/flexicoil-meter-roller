@@ -155,8 +155,8 @@ module angled_flutes(segment_radius, inner_radius, num_flutes, root_width, tip_w
     root_distance_from_circle = inner_radius - sqrt(inner_radius^2 - (root_width / 2) ^ 2);
     
     root_distance = inner_radius - (inner_radius - sqrt(inner_radius^2 - (root_width / 2) ^ 2));
-    echo (root_distance, inner_radius);
-    echo (segment_radius - root_distance);
+    //echo (root_distance, inner_radius);
+    //echo (segment_radius - root_distance);
     //echo ( ((tip_width / 2) - (root_width / 2)) / (segment_radius - root_distance));
 
     //y=mx+b, x = (y-b)/m
