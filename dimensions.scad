@@ -1,12 +1,16 @@
 /****************************************************
  * General dimensions, including printing tolerance *
  ****************************************************/
+//units
+inches = 25.4; //mm
 
 //common variables to all segment types
 
 tolerance = 0.2; //add to hex width
-segment_width = 80.15; //in mm
-segment_diameter = 79.5; //in mm
+bearing_tolerance = 0;
+segment_width = 80.15; //mm
+segment_diameter = 79.5; //mm
+segment_diameter_tight = 85.5; //mm
 divider_width = 3; //in mm
 
 //when extruding and rotating, number of steps. More is smoother

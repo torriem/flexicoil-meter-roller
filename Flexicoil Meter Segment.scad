@@ -12,10 +12,38 @@ $fn=100;
 
 module blank(segment_width = segment_width) {
     difference() {
-        cylinder(segment_width, segment_diameter/2, segment_diameter/2);
+        cylinder(segment_width, segment_diameter_tight/2, segment_diameter_tight/2);
         cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
         
     }
+}
+
+module extra_fine_fluted(segment_width = segment_width, spiral = true, divider = false, divider_width = 3) {
+	//alternate extra fine roller with angled flutes instead of scallops
+	num_flutes = 15;
+	root_width = 5;
+	tip_width = 3;
+	flute_depth = 3; //mm
+	inner_diameter = segment_diameter_tight - flute_depth*2;
+	echo (inner_diameter);
+
+    if (divider) {
+        union() {
+            create_extra_fine();
+            blank(divider_width);
+        }
+    } else {
+        create_extra_fine();
+    }
+
+    module create_extra_fine() {
+		difference() {
+			linear_extrude(segment_width,twist=(spiral ? 360/num_flutes : 0),slices=slices,convexity=10) {
+				angled_flutes(segment_diameter_tight / 2, inner_diameter / 2, num_flutes, root_width, tip_width);
+			}
+			cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+		}
+	}
 }
 
 module extra_fine(segment_width = segment_width, spiral = true, divider = false, divider_width = 3) {
@@ -36,7 +64,7 @@ module extra_fine(segment_width = segment_width, spiral = true, divider = false,
     module create_extra_fine() {
 		difference() {
 			linear_extrude(segment_width,twist=(spiral ? 360/num_flutes/2 : 0), slices=slices) {
-				rounded_flutes(segment_diameter/2, num_flutes=num_flutes, 
+				rounded_flutes(segment_diameter_tight/2, num_flutes=num_flutes, 
 							   width=scallop_width, depth=scallop_depth);
 			}
 			cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
