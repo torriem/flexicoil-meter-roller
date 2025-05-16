@@ -105,7 +105,7 @@ module blank(segment_width = segment_width, segment_diameter = segment_diameter_
 module extra_fine_fluted(segment_width = segment_width, 
                          spiral = true, 
 						 divider = false, divider_width = 3, 
-						 flute_depth = 3) {
+						 flute_depth = extra_fine_flute_depth) {
 	//alternate extra fine roller with angled flutes instead of scallops
 	num_flutes = 15;
 	root_width = 5;
@@ -137,7 +137,7 @@ module extra_fine(segment_width = segment_width,
                   spiral = true, 
 				  divider = false, 
 				  divider_width = 3,
-				  scallop_depth = 3) {
+				  scallop_depth = extra_fine_flute_depth) {
     //extra fine roller
     num_flutes = 15;
     scallop_width = 13.5;
