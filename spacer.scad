@@ -3,10 +3,7 @@ include <dimensions.scad>
 bearing_tolerance = 0;
 $fn = 100;
 
-//intersection() {
 	spacer(width = 2.5 * inches, nub = true);
-//	cylinder(25, 50, 50);
-//}
 
 module spacer(width = 2.5 * inches, nub = true, nub_position = -1) {
 
