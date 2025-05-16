@@ -3,7 +3,6 @@ include <Flexicoil Meter Segment.scad>
 flute_depth = 3; //not ideal, since we also have this in the included scad file
 
 union() {
-	flute_depth = 3;
 	segment_part(segment_width, segment_diameter_tight, 0, 25, top_chamfer = 3)
 		blank(segment_width);
 
@@ -19,3 +18,4 @@ union() {
 		segment_part(segment_width, segment_diameter_tight, 75, 100, bottom_chamfer = flute_depth)
 			blank(segment_width);
 }
+

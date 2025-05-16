@@ -71,7 +71,6 @@ module segment_part(segment_width = segment_width, segment_diameter = segment_di
 				bottom_chamfer(segment_diameter);
 			}
 			if (do_top_chamfer) {
-				echo ("hmmm");
 				translate([0,0,cut_width])
 					top_chamfer(segment_diameter);
 			}
