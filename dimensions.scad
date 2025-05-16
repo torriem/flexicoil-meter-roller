@@ -20,11 +20,11 @@ extra_fine_flute_depth = 3; //mm
 slices = 40; 
 
 //hex should be 1.125" across, flat to flat.
-hex_radius = 1.125 * inches;
+hex_width = 1.125 * inches;
 
 //calculate size of hex hole to print.  Circle circumsribes the 
 //hexagon, so we adjust the radius by dividing by cos(30) so that 
 //the actual width between flats is what we want.  Also we add width
 //to account for the printer's tolerances
-hex_radius_cylinder = (hex_radius / 2  + tolerance / 2) / cos(30);
+hex_radius_cylinder = (hex_width / 2  + tolerance / 2) / cos(30);
 
