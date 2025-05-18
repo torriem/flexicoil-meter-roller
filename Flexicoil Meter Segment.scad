@@ -112,9 +112,25 @@ module add_divider(divide_width = divider_width, tight=false) {
 	}
 }
 
+module extra_fine(segment_width = segment_width, 
+                  spiral = true, 
+				  scallop_depth = extra_fine_flute_depth) {
+    //extra fine roller
+    num_flutes = 15;
+    scallop_width = 13.5;
+	//assume larger diameter
+    
+	difference() {
+		linear_extrude(segment_width,twist=(spiral ? 360/num_flutes/2 : 0), slices=slices) {
+			rounded_flutes(segment_diameter_tight/2, num_flutes=num_flutes, 
+						   width=scallop_width, depth=scallop_depth);
+		}
+		cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+	}
+}
+
 module extra_fine_fluted(segment_width = segment_width, 
                          spiral = true, 
-						 divider = false, divider_width = 3, 
 						 flute_depth = extra_fine_flute_depth) {
 	//alternate extra fine roller with angled flutes instead of scallops
 	num_flutes = 15;
@@ -123,128 +139,53 @@ module extra_fine_fluted(segment_width = segment_width,
 	inner_diameter = segment_diameter_tight - flute_depth*2;
 	//assume larger diameter
 
-    if (divider) {
-        union() {
-            create_extra_fine();
-            blank(divider_width);
-        }
-    } else {
-       	create_extra_fine(segment_width);
-    }
-
-    module create_extra_fine(width = segment_width, start=0, end=segment_width) {
-
-		difference() {
-			linear_extrude(width,twist=(spiral ? 360/num_flutes : 0),slices=slices,convexity=10) {
-				angled_flutes(segment_diameter_tight / 2, inner_diameter / 2, num_flutes, root_width, tip_width);
-			}
-			cylinder(width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+	difference() {
+		linear_extrude(segment_width,twist=(spiral ? 360/num_flutes : 0),slices=slices,convexity=10) {
+			angled_flutes(segment_diameter_tight / 2, inner_diameter / 2, num_flutes, root_width, tip_width);
 		}
+		cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
 	}
 }
 
-module extra_fine(segment_width = segment_width, 
-                  spiral = true, 
-				  divider = false, 
-				  divider_width = 3,
-				  scallop_depth = extra_fine_flute_depth) {
-    //extra fine roller
-    num_flutes = 15;
-    scallop_width = 13.5;
-	//assume larger diameter
-    
-    if (divider) {
-        union() {
-            create_extra_fine();
-            blank(divider_width);
-        }
-    } else {
-        create_extra_fine();
-    }
-
-    module create_extra_fine() {
-		difference() {
-			linear_extrude(segment_width,twist=(spiral ? 360/num_flutes/2 : 0), slices=slices) {
-				rounded_flutes(segment_diameter_tight/2, num_flutes=num_flutes, 
-							   width=scallop_width, depth=scallop_depth);
-			}
-			cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
-		}
-	}
-}
-
-module coarse(segment_width = segment_width, spiral = true, twist = 36, divider = false, divider_width = 3) {
-    num_flutes = 10;
-    root_width = 9;
-    tip_width = 3;
-    inner_diameter = 51;
-
-    if (divider) {
-        union() {
-            create_coarse();
-            blank(divider_width);
-        }
-    } else {
-        create_coarse();
-    }
-
-    module create_coarse() {
-        difference() {
-            linear_extrude(segment_width,twist=(spiral ? twist : 0), slices=slices) {
-                angled_flutes(segment_diameter / 2, inner_diameter /2, num_flutes, root_width, tip_width);
-            }
-            cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
-        }
-    }
-}
-
-module extra_coarse(segment_width = segment_width, spiral = true, twist = 36, divider = false, divider_width = 3) {
-    num_flutes = 6;
-    root_width = 10;
-    tip_width = 3;
-    inner_diameter = 44;
-    
-    if (divider) {
-        union() {
-            create_extra_course();
-            blank(divider_width);
-        }
-    } else {
-        create_extra_course();
-    }
-
-    module create_extra_course() {
-        difference() {
-            linear_extrude(segment_width,twist=(spiral ? twist : 0),slices=slices) {
-                angled_flutes(segment_diameter / 2, inner_diameter / 2, num_flutes, root_width, tip_width);
-            }
-            cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
-        }
-    }
-}
-
-module fine(segment_width = segment_width, spiral = true, divider = false, divider_width = 3) {
+module fine(segment_width = segment_width, spiral = true) {
     num_flutes = 10;
     root_width = 8;
     tip_width = 6;
     inner_diameter = 63.5;
 
-    if (divider) {
-        union() {
-            create_fine();
-            blank(divider_width);
-        }
-    } else {
-        create_fine();
-    }
-
-	module create_fine() {
-		difference() {
-			linear_extrude(segment_width,twist=(spiral ? 360/num_flutes : 0),slices=slices,convexity=10) {
-				angled_flutes(segment_diameter / 2, inner_diameter / 2, num_flutes, root_width, tip_width);
-			}
-			cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+	difference() {
+		linear_extrude(segment_width,twist=(spiral ? 360/num_flutes : 0),slices=slices,convexity=10) {
+			angled_flutes(segment_diameter / 2, inner_diameter / 2, num_flutes, root_width, tip_width);
 		}
+		cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+	}
+}
+
+module coarse(segment_width = segment_width, spiral = true, twist = 36) {
+    num_flutes = 10;
+    root_width = 9;
+    tip_width = 3;
+    inner_diameter = 51;
+
+	difference() {
+		linear_extrude(segment_width,twist=(spiral ? twist : 0), slices=slices) {
+			angled_flutes(segment_diameter / 2, inner_diameter /2, num_flutes, root_width, tip_width);
+		}
+		cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+	}
+}
+
+module extra_coarse(segment_width = segment_width, spiral = true, twist = 36) {
+    num_flutes = 6;
+    root_width = 10;
+    tip_width = 3;
+    inner_diameter = 44;
+    
+	difference() {
+		linear_extrude(segment_width,twist=(spiral ? twist : 0),slices=slices) {
+			angled_flutes(segment_diameter / 2, inner_diameter / 2, num_flutes, root_width, tip_width);
+		}
+		cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
 	}
 }
 
