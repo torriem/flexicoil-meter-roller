@@ -4,8 +4,8 @@ dimensions.scad defines common dimensions used by all the meter roller segment t
 
 `Extra Fine Segments.scad`, `Fine Segments.scad`, `Coarse Segments.scad`, and `Extra Coarse Segments.scad` demonstrate all of the variants of the different segment types possible.  In order to create an STL of a specific variant, comment out the other module calls in the scad file before exporting to STL.
 
-![Extra Fine Segments](/images/Extra Fine Segments.png)
-![Fine Segments](/images/Fine Segments.png)
-![Coarse Segments](/images/Coarse Segments.png)
-![Extra Coarse Segments](/images/Extra Coarse Segments.png)
+![Extra Fine Segments](./images/Extra Fine Segments.png)
+![Fine Segments](./images/Fine Segments.png)
+![Coarse Segments](./images/Coarse Segments.png)
+![Extra Coarse Segments](./images/Extra Coarse Segments.png)
 
