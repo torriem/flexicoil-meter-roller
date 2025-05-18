@@ -102,10 +102,13 @@ module blank(segment_width = segment_width, segment_diameter = segment_diameter_
 	}
 }
 
-module add_divider(divide_width = divider_width) {
+module add_divider(divide_width = divider_width, tight=false) {
 	union() {
 		children();
-		blank(divider_width);
+		if (!tight)
+			blank(divider_width, segment_diameter=segment_diameter);
+		else
+			blank(divider_width);
 	}
 }
 
