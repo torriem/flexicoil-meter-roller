@@ -102,6 +102,13 @@ module blank(segment_width = segment_width, segment_diameter = segment_diameter_
 	}
 }
 
+module add_divider(divide_width = divider_width) {
+	union() {
+		children();
+		blank(divider_width);
+	}
+}
+
 module extra_fine_fluted(segment_width = segment_width, 
                          spiral = true, 
 						 divider = false, divider_width = 3, 
