@@ -113,7 +113,8 @@ module add_divider(divide_width = divider_width, tight=false) {
 }
 
 module extra_fine(segment_width = segment_width, 
-                  spiral = true, 
+                  spiral = true,
+				  twist = 24,
 				  scallop_depth = extra_fine_flute_depth) {
     //extra fine roller
     num_flutes = 15;
@@ -121,7 +122,7 @@ module extra_fine(segment_width = segment_width,
 	//assume larger diameter
     
 	difference() {
-		linear_extrude(segment_width,twist=(spiral ? 360/num_flutes/2 : 0), slices=slices) {
+		linear_extrude(segment_width,twist=(spiral ? twist : 0), slices=slices) {
 			rounded_flutes(segment_diameter_tight/2, num_flutes=num_flutes, 
 						   width=scallop_width, depth=scallop_depth);
 		}
@@ -131,6 +132,7 @@ module extra_fine(segment_width = segment_width,
 
 module extra_fine_fluted(segment_width = segment_width, 
                          spiral = true, 
+						 twist = 24,
 						 flute_depth = extra_fine_flute_depth) {
 	//alternate extra fine roller with angled flutes instead of scallops
 	num_flutes = 15;
@@ -140,21 +142,23 @@ module extra_fine_fluted(segment_width = segment_width,
 	//assume larger diameter
 
 	difference() {
-		linear_extrude(segment_width,twist=(spiral ? 360/num_flutes : 0),slices=slices,convexity=10) {
+		linear_extrude(segment_width,twist=(spiral ? twist : 0),slices=slices,convexity=10) {
 			angled_flutes(segment_diameter_tight / 2, inner_diameter / 2, num_flutes, root_width, tip_width);
 		}
 		cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
 	}
 }
 
-module fine(segment_width = segment_width, spiral = true) {
+module fine(segment_width = segment_width, 
+            spiral = true,
+			twist = 36) {
     num_flutes = 10;
     root_width = 8;
     tip_width = 6;
     inner_diameter = 63.5;
 
 	difference() {
-		linear_extrude(segment_width,twist=(spiral ? 360/num_flutes : 0),slices=slices,convexity=10) {
+		linear_extrude(segment_width,twist=(spiral ? twist : 0),slices=slices,convexity=10) {
 			angled_flutes(segment_diameter / 2, inner_diameter / 2, num_flutes, root_width, tip_width);
 		}
 		cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);

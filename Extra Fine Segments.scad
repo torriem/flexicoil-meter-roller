@@ -20,6 +20,12 @@ translate([50,-50,0])
 translate([150,-50,0])
 	add_divider(tight=true)
 		extra_fine_fluted(spiral=true, flute_depth = flute_depth);
+	
+translate([-50,150,0])
+	extra_fine(spiral=true, scallop_depth = flute_depth, twist = -24);
+
+translate([150,150,0])
+	extra_fine_fluted(spiral=true, flute_depth = flute_depth, twist = -24);
 
 /* An experimental segment design for canola that uses
    flutes like the OEM fine roller, but very shallow,
