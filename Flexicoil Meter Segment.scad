@@ -10,21 +10,21 @@ include <dimensions.scad>
 //make cylinders smoother
 $fn=100;
 
-module bottom_chamfer(diameter) {
+module bottom_chamfer(diameter, chamfer_angle) {
 	rotate_extrude() {
-		polygon( points = [[diameter / 2 + 1,0.364], [diameter /2.0 + 1, -7.28],
-				   [diameter / 2 - 20, -7.28]]);
+		polygon( points = [[diameter / 2 + 1,tan(chamfer_angle)], [diameter /2.0 + 1, -tan(chamfer_angle) * 20],
+				   [diameter / 2 - 20, -tan(chamfer_angle) * 20]]);
 	}
 }
 
-module top_chamfer(diameter) {
+module top_chamfer(diameter, chamfer_angle) {
 	rotate_extrude() {
-		polygon( points = [[diameter / 2 + 1,-0.364], [diameter /2.0 + 1, 7.28],
-				   [diameter / 2 - 20, 7.28]]);
+		polygon( points = [[diameter / 2 + 1,-tan(chamfer_angle)], [diameter /2.0 + 1, tan(chamfer_angle) * 20],
+				   [diameter / 2 - 20, tan(chamfer_angle) * 20]]);
 	}
 }
 
-module segment_part(segment_width = segment_width, segment_diameter = segment_diameter, start_percent=0, end_percent=0, bottom_chamfer = 0, top_chamfer = 0) {
+module segment_part(segment_width = segment_width, segment_diameter = segment_diameter, start_percent=0, end_percent=0, bottom_chamfer = 0, top_chamfer = 0, chamfer_angle=20) {
 	/* renders a specific part of a segment, defined by a start 
 	   and end percent of the segment's width.  Additionally can
 	   apply a chamfer to the top and/or bottom outside edges,
@@ -33,8 +33,8 @@ module segment_part(segment_width = segment_width, segment_diameter = segment_di
 	*/
 
 	//calculate how far into the segment to cut the chamfer bevel
-	chamfer_up = tan(20) * bottom_chamfer;
-	chamfer_down = tan(20) * top_chamfer;
+	chamfer_up = tan(chamfer_angle) * bottom_chamfer;
+	chamfer_down = tan(chamfer_angle) * top_chamfer;
 
 	//do a bottom chamfer if requested and if there's room below 
 	//the start_percent to apply it
@@ -68,11 +68,11 @@ module segment_part(segment_width = segment_width, segment_diameter = segment_di
 
 			//apply the chamfer bevels
 			if (do_bottom_chamfer) {
-				bottom_chamfer(segment_diameter);
+				bottom_chamfer(segment_diameter, chamfer_angle);
 			}
 			if (do_top_chamfer) {
 				translate([0,0,cut_width])
-					top_chamfer(segment_diameter);
+					top_chamfer(segment_diameter, chamfer_angle);
 			}
 		}
 	} else {
