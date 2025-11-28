@@ -13,11 +13,14 @@ module spacer_print_test() {
 	}
 }
 
-translate([-100,0,0])
+translate([60,-60,0])
 	bearing_end_bushing();
-translate([100,0,0])
+translate([-60,60,0])
 	bearing_bushing();
 
 //spacer_print_test();
-spacer(width = 2.5 * inches, num = true);
+translate([60,60])
+	spacer(width = 2.5 * inches, nub = false);
+translate([-60,-60])
+	spacer(width = 2.5 * inches, nub = true);
 
