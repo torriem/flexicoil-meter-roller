@@ -12,3 +12,4 @@ dimensions.scad defines common dimensions used by all the meter roller segment t
 
 ![Extra Coarse Segments](./images/Extra%20Coarse%20Segments.png)
 
+![Spacers and Bushings](./images/Spacers and Bushings.png)
