@@ -10,6 +10,105 @@ include <dimensions.scad>
 //make cylinders smoother
 $fn=100;
 
+module bearing_bushing() {
+	difference() {
+		union() {
+			cylinder (6, 57/2, 57/2);
+			translate( [0,0,6] ) {
+				cylinder (16, 25 - bearing_tolerance / 2, 25 - bearing_tolerance / 2);
+			}
+		}
+		cylinder(22,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+		translate([0,0,22-1.5]) {
+			cylinder(1.5,oring_hex_radius_cylinder,oring_hex_radius_cylinder,$fn=6);
+		}
+	}
+}
+
+module bearing_end_bushing() {
+	difference() {
+		translate( [ 0,0,-3] ) {
+			difference() {
+				bearing_bushing();
+				rotate_extrude() {
+					polygon( points = [ [ 25, 3], [25+6, 3], [25+6, 6] ]);
+				}
+				cylinder(3, 25+6, 25+6);
+			}
+		}
+		translate([0,0,2.5]) {
+			rotate([0,90,0]) {
+				cylinder(60, 2.5, 2.5, center=true);
+				translate([2.5,0,0]) {
+					cube([5,5,60], center=true);
+				}
+			}
+		}
+	}
+}
+
+module spacer(width = 2.5 * inches, nub = true, nub_position = -1) {
+
+	difference() {
+		make_spacer_and_nub();
+		translate([0,0,11/16*inches])
+			chamfer();
+	}
+	//make_nub(0);
+
+	module chamfer() {
+		translate([0,0,-6.1739])
+			rotate_extrude()
+				translate([33,0,0])
+					rotate([0,0,45])
+						square([11/32*inches,11/32 *inches]);
+
+	}
+
+	module make_nub(position)
+		translate([85/2-1,0,position])
+			union() {
+				translate([0,0,-7.5])
+						rotate([90,0,0])
+							linear_extrude(8, center = true)
+								polygon( points = [ [0,0], [7,0], [0,-5] ]);
+								
+				translate([2,0,0])
+					cube([10,8,15],center=true);
+			}
+
+	module make_spacer() {
+		difference() {
+			//outer
+			cylinder (width, segment_diameter_tight / 2, segment_diameter_tight / 2);
+			//inner
+			cylinder (width, segment_diameter_tight / 2 - 6, segment_diameter_tight / 2 - 6);
+
+			//bottom bearing
+			cylinder (11/16 * 25.4, (80 + bearing_tolerance)/ 2, (80 + bearing_tolerance) / 2);
+			
+			//top bearing
+			translate([0,0, width - 11/16 * inches])
+				cylinder (11/16 * 25.4, (80 + bearing_tolerance)/ 2, (80 + bearing_tolerance) / 2);
+		}
+	}
+
+	module make_spacer_and_nub() {
+		if (nub) {
+			union() {
+				make_spacer();
+				if (nub_position == -1) {
+					make_nub(width / 2); //put it in the middle
+				} else {
+					make_nub(nub_position);
+				}
+			}
+		} else {
+			make_spacer();
+		}
+	}
+}
+
 module bottom_chamfer(diameter, chamfer_angle) {
 	rotate_extrude() {
 		polygon( points = [[diameter / 2 + 1,tan(chamfer_angle)], [diameter /2.0 + 1, -tan(chamfer_angle) * 20],

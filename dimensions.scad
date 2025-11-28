@@ -6,8 +6,8 @@ inches = 25.4; //mm
 
 //common variables to all segment types
 
-tolerance = 0.2; //mm add to hex width (enlarge hole)
-bearing_tolerance = 0; //mm
+tolerance = 0.1; //mm add to hex width (enlarge hole)
+bearing_tolerance = 0.1; //mm
 segment_width = 80.15; //mm
 segment_diameter = 79.5; //mm
 segment_diameter_tight = 85.5; //mm
@@ -27,4 +27,8 @@ hex_width = 1.125 * inches;
 //the actual width between flats is what we want.  Also we add width
 //to account for the printer's tolerances
 hex_radius_cylinder = (hex_width / 2  + tolerance / 2) / cos(30);
+
+oring_hex_width = 1.25 * inches;
+oring_hex_radius_cylinder = (oring_hex_width / 2  + tolerance / 2) / cos(30);
+
 
