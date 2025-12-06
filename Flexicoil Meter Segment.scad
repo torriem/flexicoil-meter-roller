@@ -10,18 +10,50 @@ include <dimensions.scad>
 //make cylinders smoother
 $fn=100;
 
+module
+shaft_spacer(length) {
+	difference()
+	{
+		cylinder(length, bushing_hex_radius_cylinder + 6, bushing_hex_radius_cylinder + 6, $fn=6);
+		cylinder(length, bushing_hex_radius_cylinder + 1, bushing_hex_radius_cylinder + 1, $fn=6);
+	}
+}
+
 module bearing_bushing() {
 	difference() {
+		//bottom larger diameter part, plus body that goes inside bearing
 		union() {
 			cylinder (6, 57/2, 57/2);
 			translate( [0,0,6] ) {
-				cylinder (16, 25 - bearing_tolerance / 2, 25 - bearing_tolerance / 2);
+				cylinder (16, 25 - bearing_inner_tolerance / 2, 25 - bearing_inner_tolerance / 2);
 			}
 		}
-		cylinder(22,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+		//hex hole to slide over shaft
+		cylinder(22,bushing_hex_radius_cylinder,bushing_hex_radius_cylinder,$fn=6);
 		translate([0,0,22-1.5]) {
 			cylinder(1.5,oring_hex_radius_cylinder,oring_hex_radius_cylinder,$fn=6);
 		}
+
+		//chamfer top bearing surface
+		translate([0,0,21.5])
+			top_chamfer(50 , 45);
+
+		//chamfer top hex hole
+		translate([0,0,21]){
+			rotate([180,0,0]){
+				intersection()  {
+					cylinder(bushing_hex_radius_cylinder+1,bushing_hex_radius_cylinder+1, 0, $fn=6);
+					cylinder(5,25,25);
+				}
+			}
+		}
+
+		//chamfer bottom hex hole
+		intersection()  {
+			cylinder(bushing_hex_radius_cylinder+2,bushing_hex_radius_cylinder+2, 0, $fn=6);
+			cylinder(5,25,25);
+		}
+
 	}
 }
 
@@ -30,24 +62,29 @@ module bearing_end_bushing() {
 		translate( [ 0,0,-3] ) {
 			difference() {
 				bearing_bushing();
+				//beveled the bottom larger diameter part
 				rotate_extrude() {
 					polygon( points = [ [ 25, 3], [25+6, 3], [25+6, 6] ]);
 				}
+				//make the bottom part thinner
 				cylinder(3, 25+6, 25+6);
 			}
 		}
+		//groove for roll pin
 		translate([0,0,2.5]) {
-			rotate([0,90,0]) {
-				cylinder(60, 2.5, 2.5, center=true);
-				translate([2.5,0,0]) {
-					cube([5,5,60], center=true);
+			rotate([0,0,90]) {
+				rotate([0,90,0]) {
+					cylinder(60, 2.5, 2.5, center=true);
+					translate([2.5,0,0]) {
+						cube([5,5,60], center=true);
+					}
 				}
 			}
 		}
 	}
 }
 
-module spacer(width = 2.5 * inches, nub = true, nub_position = -1) {
+module spacer(width = 2.5 * inches, nub = true, nub_width = 0) {
 
 	difference() {
 		make_spacer_and_nub();
@@ -65,17 +102,26 @@ module spacer(width = 2.5 * inches, nub = true, nub_position = -1) {
 
 	}
 
-	module make_nub(position)
-		translate([85/2-1,0,position])
-			union() {
-				translate([0,0,-7.5])
-						rotate([90,0,0])
-							linear_extrude(8, center = true)
-								polygon( points = [ [0,0], [7,0], [0,-5] ]);
-								
-				translate([2,0,0])
-					cube([10,8,15],center=true);
+	module make_nub(height) {
+		difference() {
+			translate( [0,0,width/2] ) {
+				linear_extrude(height, center=true) {
+					polygon( points = [ [85/2-2,10], [85/2 + 12, 6], [85/2 + 12, -6], [85/2-2,-10] ] );
+
+				}
 			}
+
+			//confusing variable names I know.  width is actually total height of spacer
+			//if the nub doesn't reach to the build plate, chamfer the underside for 3D
+			//printing.
+			if (height < width) {
+				rotate_extrude() {
+					offset = (width - height) / 2;
+					polygon( points = [ [85/2,offset], [85/2 + 14,offset], [85/2+14,offset + 5] ]);
+				}
+			}
+		}
+	}
 
 	module make_spacer() {
 		difference() {
@@ -85,22 +131,23 @@ module spacer(width = 2.5 * inches, nub = true, nub_position = -1) {
 			cylinder (width, segment_diameter_tight / 2 - 6, segment_diameter_tight / 2 - 6);
 
 			//bottom bearing
-			cylinder (11/16 * 25.4, (80 + bearing_tolerance)/ 2, (80 + bearing_tolerance) / 2);
+			cylinder (11/16 * 25.4, (80 + bearing_outer_tolerance)/ 2, (80 + bearing_outer_tolerance) / 2);
 			
 			//top bearing
 			translate([0,0, width - 11/16 * inches])
-				cylinder (11/16 * 25.4, (80 + bearing_tolerance)/ 2, (80 + bearing_tolerance) / 2);
+				cylinder (11/16 * 25.4, (80 + bearing_outer_tolerance)/ 2, (80 + bearing_outer_tolerance) / 2);
 		}
 	}
 
 	module make_spacer_and_nub() {
-		if (nub) {
+		echo (nub_width);
+		if (nub_width) {
 			union() {
 				make_spacer();
-				if (nub_position == -1) {
-					make_nub(width / 2); //put it in the middle
+				if (nub_width == -1) {
+					make_nub(width); //put across whole length
 				} else {
-					make_nub(nub_position);
+					make_nub(nub_width);
 				}
 			}
 		} else {
