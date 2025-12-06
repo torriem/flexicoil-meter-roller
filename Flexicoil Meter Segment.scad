@@ -81,6 +81,12 @@ module bearing_end_bushing() {
 				}
 			}
 		}
+		//chamfer bottom hex hole
+		intersection()  {
+			cylinder(bushing_hex_radius_cylinder+2,bushing_hex_radius_cylinder+2, 0, $fn=6);
+			cylinder(5,25,25);
+		}
+
 	}
 }
 
