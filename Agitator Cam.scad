@@ -24,8 +24,17 @@ difference() {
 	translate( [44.45, 0, 0] ) {
 		union() {
 			cylinder(10,2.5,2.5);
-			cylinder(3,4,4,$fn=6);
+			translate([0,0,6.525]) {
+				rotate([0,0,30]) {
+					cylinder(3,4,4,$fn=6);
+				}
+			}
 		}
+	}
+
+	//screw hole for attaching label
+	translate( [1.125 * inches,0,0] ) {
+		cylinder(10,2,2);
 	}
 
 	//0.25" hole for the roll pin
