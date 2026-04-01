@@ -250,7 +250,7 @@ module segment_part(segment_width = segment_width, segment_diameter = segment_di
 module blank(segment_width = segment_width, segment_diameter = segment_diameter_tight) {
 	difference() {
 		cylinder(segment_width, segment_diameter/2, segment_diameter/2);
-		cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+		cylinder(segment_width+1,segment_hex_radius_cylinder,segment_hex_radius_cylinder,$fn=6);
 	}
 }
 
@@ -278,7 +278,7 @@ module extra_fine(segment_width = segment_width,
 			rounded_flutes(segment_diameter_tight/2, num_flutes=num_flutes, 
 						   width=scallop_width, depth=scallop_depth);
 		}
-		cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+		cylinder(segment_width+1,segment_hex_radius_cylinder,segment_hex_radius_cylinder,$fn=6);
 	}
 }
 
@@ -297,7 +297,7 @@ module extra_fine_fluted(segment_width = segment_width,
 		linear_extrude(segment_width,twist=(spiral ? twist : 0),slices=slices,convexity=10) {
 			angled_flutes(segment_diameter_tight / 2, inner_diameter / 2, num_flutes, root_width, tip_width);
 		}
-		cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+		cylinder(segment_width+1,segment_hex_radius_cylinder,segment_hex_radius_cylinder,$fn=6);
 	}
 }
 
@@ -313,7 +313,7 @@ module fine(segment_width = segment_width,
 		linear_extrude(segment_width,twist=(spiral ? twist : 0),slices=slices,convexity=10) {
 			angled_flutes(segment_diameter / 2, inner_diameter / 2, num_flutes, root_width, tip_width);
 		}
-		cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+		cylinder(segment_width+1,segment_hex_radius_cylinder,segment_hex_radius_cylinder,$fn=6);
 	}
 }
 
@@ -327,7 +327,7 @@ module coarse(segment_width = segment_width, spiral = true, twist = 36) {
 		linear_extrude(segment_width,twist=(spiral ? twist : 0), slices=slices) {
 			angled_flutes(segment_diameter / 2, inner_diameter /2, num_flutes, root_width, tip_width);
 		}
-		cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+		cylinder(segment_width+1,segment_hex_radius_cylinder,segment_hex_radius_cylinder,$fn=6);
 	}
 }
 
@@ -341,7 +341,7 @@ module extra_coarse(segment_width = segment_width, spiral = true, twist = 36) {
 		linear_extrude(segment_width,twist=(spiral ? twist : 0),slices=slices) {
 			angled_flutes(segment_diameter / 2, inner_diameter / 2, num_flutes, root_width, tip_width);
 		}
-		cylinder(segment_width+1,hex_radius_cylinder,hex_radius_cylinder,$fn=6);
+		cylinder(segment_width+1,segment_hex_radius_cylinder,segment_hex_radius_cylinder,$fn=6);
 	}
 }
 

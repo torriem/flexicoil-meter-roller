@@ -4,6 +4,12 @@ dimensions.scad defines common dimensions used by all the meter roller segment t
 
 `Extra Fine Segments.scad`, `Fine Segments.scad`, `Coarse Segments.scad`, and `Extra Coarse Segments.scad` demonstrate all of the variants of the different segment types possible.  In order to create an STL of a specific variant, comment out the other module calls in the scad file before exporting to STL.
 
+Most objects can be printed without supports.  The bearing endcap can be printed as it renders (with the open cup up) with supports in TPU 95A, with between 25 and 50% infill.  Supports, even when made with TPU, seem to remove pretty well.  
+
+Meter segments seem to print quite well with TPU 95A, with 5 walls and 30% infill.  The mechanical properties end up being very similar to the OEM parts.
+
+Spacers and Bushings can be printed out of either ABS or PETG.  You will likely have to adjust the tolerances to get a good fit on the shaft and bearings.
+
 ![Extra Fine Segments](./images/Extra%20Fine%20Segments.png)
 
 ![Fine Segments](./images/Fine%20Segments.png)
@@ -15,3 +21,5 @@ dimensions.scad defines common dimensions used by all the meter roller segment t
 ![Spacers and Bushings](./images/Spacers%20and%20Bushings.png)
 
 ![Agitator Cam](./images/Agitator.png)
+
+![Bearing endcaps](./images/Bearing%20endcap.png)

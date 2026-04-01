@@ -3,6 +3,7 @@ include <dimensions.scad>
 $fn=100;
 
 difference() {
+	//basic shape
 	union() {
 		linear_extrude(9.525) {
 			hull() {
@@ -14,8 +15,12 @@ difference() {
 		}
 		cylinder( 19, 18.5, 18.5);
 	}	
+
+	//1" shaft hole
 	cylinder( 19, 12.7, 12.7);
 
+	//5mm hole with hex pocket for nut for the
+	//cam bearing
 	translate( [44.45, 0, 0] ) {
 		union() {
 			cylinder(10,2.5,2.5);
@@ -23,12 +28,12 @@ difference() {
 		}
 	}
 
+	//0.25" hole for the roll pin
 	translate([0,0,9.5]) {
 		rotate([90,0,0]) {
 			cylinder(50,3.175, 3.175, center=true);
 		}
 	}
-
 }
 
 

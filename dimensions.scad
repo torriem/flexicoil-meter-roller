@@ -13,10 +13,12 @@ inches = 25.4; //mm
 segment_tolerance = 0.1; //mm add to hex width (enlarge hole)
 bushing_tolerance = 0.2;
 
-bearing_inner_tolerance = -0.1; //smaller for tighter fit
-bearing_outer_tolerance = 0.1; //smaller for tighter fit
+//for ABS, inner tolerance -0.2, outer tolerance 0.2
+//for PETG, inner tolerance -0.1, outer tolerance 0.2
+bearing_inner_tolerance = -0.2; //smaller for tighter fit
+bearing_outer_tolerance = 0.15; //smaller for tighter fit
 
-segment_width = 80.15; //mm
+segment_width = 80.45; //mm
 segment_diameter = 79.5; //mm
 segment_diameter_tight = 85.5; //mm
 divider_width = 3; //mm
